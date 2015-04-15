@@ -1,0 +1,11 @@
+<ion-view view-title="历史任务列表">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="month in months" href="#/todo/archive/{{month}}">
+        {{month}}
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+    <div class="tip-norecord" ng-show="months.length == 0">没有历史任务</div>
+  </ion-content>
+</ion-view>

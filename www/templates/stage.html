@@ -1,0 +1,22 @@
+<ion-view view-title="待办任务列表">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="todo in todos" class="item-remove-animate item-todo" on-hold="moveTaskIn()">
+        <label class="item-index">{{$index + 1}}.</label>
+          <span class="done-{{todo.done}}">{{todo.text}}</span>
+          <ion-option-button class="button-assertive" ng-click="deleteTodo()">删除</ion-option-button>
+      </ion-item>
+      <ion-item class="add-task" id="add-task">
+        <form ng-submit="addTodo()">
+          <label class="item-input">
+            <input id="add-input" type="text" placeholder="添加新任务" ng-model="todoText" required>
+          </label>
+        </form>
+      </ion-item>
+    </ion-list>
+    <ul class="tip-move-in">
+      <li>下滑添加新的待办任务</li>
+      <li ng-show="todos.length > 0">长按将任务移入到一周任务列表</li>
+    </ul>
+  </ion-content>
+</ion-view>

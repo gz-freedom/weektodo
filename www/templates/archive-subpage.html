@@ -1,0 +1,8 @@
+<ion-view view-title="{{month}}档案">
+  <ion-content>
+    <ion-list ng-repeat="todos in monthTodos">
+      <ion-item class="item-divider">{{todos.date | date: 'MM-dd'}}</ion-item>
+      <ion-item ng-repeat="todo in todos.todos">{{todo.text}}</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

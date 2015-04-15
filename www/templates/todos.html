@@ -1,0 +1,36 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-calm">
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons>
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menu-content"></ion-nav-view>
+  </ion-side-menu-content>
+  <ion-side-menu>
+    <ion-header-bar class="bar-calm">
+      <h1 class="title">一周任务</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item menu-close ui-sref="todo.list" class="item-icon-left">
+          <i class="icon ion-ios-list-outline"></i>
+          当前一周任务
+        </ion-item>
+        <ion-item menu-close class="item-icon-left" ng-click="openAddTodo()" ng-show="addTodos">
+          <i class="icon ion-ios-plus-outline"></i>
+          新建一周任务
+        </ion-item>
+        <ion-item menu-close ui-sref="todo.stage" class="item-icon-left">
+          <i class="icon ion-ios-paper-outline"></i>
+          待办任务列表
+        </ion-item>
+        <ion-item menu-close ui-sref="todo.archive" class="item-icon-left">
+          <i class="icon ion-ios-browsers-outline"></i>
+          历史任务归档
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

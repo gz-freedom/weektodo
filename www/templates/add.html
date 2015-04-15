@@ -1,0 +1,31 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">创建一周计划</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeAddTodo()">关闭</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="todo in todos" class="item item-remove-animate" on-hold="moveTaskOut()">
+        <label class="item-index">{{$index + 1}}.</label>
+        <span class="done-{{todo.done}}">{{todo.text}}</span>
+        <ion-option-button class="button-assertive" ng-click="deleteTodo()">删除</ion-option-button>
+      </ion-item>
+      <ion-item>
+        <form ng-submit="addTodo()">
+          <label class="item-input item-task">
+            <input type="text" ng-model="todoText" placeholder="任务名称" required>
+          </label>
+        </form>
+      </ion-item>
+    </ion-list>
+    <div class="tip-move-out" ng-hide="todos.length === 0">长按将任务移出到待办任务列表</div>
+  </ion-content>
+  <ion-footer-bar>
+    <div class="button-bar">
+      <a class="button" ng-click="deleteAll()" ng-disabled="checkTodos()">删除全部任务</a>
+      <button class="button button-calm" ng-disabled="checkTodos()" ng-click="saveWeekTodos()">开始一周任务</button>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>
