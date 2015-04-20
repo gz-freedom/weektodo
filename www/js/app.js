@@ -61,8 +61,14 @@ angular.module('todos', ['ionic', 'todo.controllers'])
         controller: 'ArchiveSubCtrl'
       }
     }
+  })
+
+  .state('entrance', {
+    url: '/entrance',
+    templateUrl: 'templates/entrance.html',
+    controller: 'EntranceCtrl'
   });
 
-  $urlRouterProvider.otherwise('/todo/list');
+  $urlRouterProvider.otherwise('/entrance');
 
 }]);

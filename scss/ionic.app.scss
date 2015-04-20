@@ -47,3 +47,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	color: $light;
 	text-align: center;
 }
+.entrance {
+	background-color: $calm;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+.entrance .greeting {
+	position: absolute;
+	top: 45%;
+	color: $light;
+	font-size: 18px;
+	text-align: center;
+	width: 100%;
+}

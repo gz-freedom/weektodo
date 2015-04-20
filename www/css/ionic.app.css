@@ -7626,3 +7626,18 @@ a.button {
 .content-intro .title {
   color: #fff;
   text-align: center; }
+
+.entrance {
+  background-color: #11c1f3;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0; }
+
+.entrance .greeting {
+  position: absolute;
+  top: 45%;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  width: 100%; }
