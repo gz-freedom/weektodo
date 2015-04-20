@@ -222,26 +222,4 @@ angular.module('todo.controllers', ['todo.services'])
       $scope.$emit('updateWaitingTodo');
     }
   };
-}])
-
-.controller('IntroCtrl', ['$scope', '$timeout', 'Todos', function($scope, $timeout, Todos){
-  localStorage.clear();
-  var weektodos;
-  $scope.todoService = Todos;
-  $scope.firstOpen = false;
-  weektodos = $scope.todoService.get('weektodos');
-  if(!weektodos) {
-    $scope.firstOpen = true;
-    weektodos = {
-      enable_add: true,
-      stageTodos: [],
-      allTodos: [],
-      waitingTodos: []
-    };
-    $scope.todoService.set('weektodos', weektodos);
-  } else {
-    $timeout(function() {
-      //window.location.href = "#/todo/list";
-    }, 1000);
-  }
 }]);
