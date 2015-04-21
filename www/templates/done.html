@@ -1,10 +1,10 @@
 <ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">恭喜您，完成了一周任务</h1>
+    <h1 class="title">恭喜您，完成了一周计划</h1>
   </ion-header-bar>
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="todo in todos">
+      <ion-item ng-repeat="todo in listTodos">
         <label class="item-index">{{$index + 1}}. </label>
         <span class="done-{{todo.done}}">{{todo.text}}</span>
       </ion-item>

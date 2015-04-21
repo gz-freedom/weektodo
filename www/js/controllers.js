@@ -1,28 +1,22 @@
 angular.module('todo.controllers', ['todo.services'])
 
-.controller('MainCtrl', ['$scope', '$ionicModal', '$ionicPopup', 'Todos', function($scope, $ionicModal, $ionicPopup, Todos){
-  // set test data
-  // $http.get("test-data.json").success(function(response) {
-  //   var weektodos = response[0];
-  //   todoService.set("weektodos", weektodos);
-  // });
+.controller('MainCtrl', ['$scope', '$ionicModal', '$ionicPopup', '$location', 'Todos', function($scope, $ionicModal, $ionicPopup, $location, Todos){
   $scope.todoService = Todos;
-  var weektodos = $scope.todoService.get('weektodos'),
-      todos = weektodos.todos;
-  //console.log(weektodos);
+  $scope.weektodos = $scope.todoService.get('weektodos');
+  $scope.todos = $scope.weektodos.todos;
+
   $scope.$on('updateWaitingTodo', function(event, data) {
-    weektodos = $scope.todoService.get('weektodos');
-    $scope.todos = weektodos.waitingTodos;
+    $scope.waitingTodos = data;
   });
   $scope.$on('watchAddStatus', function(event, data) {
     $scope.addTodos = data;
   });
-  if(todos.waitingTodos.length === 0) {
-    $scope.todos = [];
+  if($scope.todos.waitingTodos.length === 0) {
+    $scope.waitingTodos = [];
   } else {
-    $scope.todos = todos.waitingTodos;
+    $scope.waitingTodos = $scope.todos.waitingTodos;
   }
-  $scope.addTodos = todos.enableAdd;
+  $scope.addTodos = $scope.todos.enableAdd;
   
   //modal controller
   $ionicModal.fromTemplateUrl('templates/add.html', {
@@ -32,31 +26,25 @@ angular.module('todo.controllers', ['todo.services'])
   });
   $scope.closeAddTodo = function() {
     $scope.modal.hide();
-    setTimeout(function() {
-      window.location.reload();
-    }, 300);
   };
-  $scope.openAddTodo = function(flag) {
-    if(flag) {
-      window.location.href = '#/todo/stage';
-    }
+  $scope.openAddTodo = function() {
     $scope.modal.show();
   };
 
   $scope.addTodo = function() {
-    $scope.todos.push({
+    $scope.waitingTodos.push({
         done: false,
         text: this.todoText
     });
     this.todoText = "";
-    todos.waitingTodos = $scope.todos;
-    $scope.todoService.set('weektodos', weektodos);
+    $scope.todos.waitingTodos = $scope.waitingTodos;
+    $scope.todoService.set('weektodos', $scope.weektodos);
   };
   $scope.deleteTodo = function() {
     var i = this.$parent.$index;
-    $scope.todos.splice(i, 1);
-    todos.waitingTodos = $scope.todos;
-    $scope.todoService.set('weektodos', weektodos);
+    $scope.waitingTodos.splice(i, 1);
+    $scope.todos.waitingTodos = $scope.waitingTodos;
+    $scope.todoService.set('weektodos', $scope.weektodos);
   };
 
   $scope.deleteAll = function() {
@@ -65,65 +53,65 @@ angular.module('todo.controllers', ['todo.services'])
       template: "确定全部删除吗?"
     }).then(function(res){
       if(res) {
-        $scope.todos = [];
-        todos.waitingTodos = [];
-        $scope.todoService.set('weektodos', weektodos);
+        $scope.waitingTodos = [];
+        $scope.todos.waitingTodos = [];
+        $scope.todoService.set('weektodos', $scope.weektodos);
       }
     });
   };
   $scope.saveWeekTodos = function() {
     var d = new Date();
-    todos.allTodos.push({
+    $scope.todos.allTodos.push({
       date: d.getTime(),
-      todos: $scope.todos
+      todos: $scope.waitingTodos
     });
-    todos.enableAdd = false;
-    todos.waitingTodos = [];
-    $scope.todoService.set('weektodos', weektodos);
+    $scope.todos.enableAdd = false;
+    $scope.addTodos = false;
+    $scope.todos.waitingTodos = [];
+    $scope.todoService.set('weektodos', $scope.weektodos);
     $scope.modal.hide();
-    $scope.$broadcast('updateTodoList', $scope.todos);
+    $scope.$broadcast('updateTodoList', $scope.waitingTodos);
   };
 
   $scope.checkTodos = function() {
-    return $scope.todos.length === 0;
+    return $scope.waitingTodos ? $scope.waitingTodos.length === 0 : false;
   };
 
   $scope.moveTaskOut = function() {
     var i = this.$parent.$index,
-        thisTodo = $scope.todos.splice(i, 1)[0];
-    todos.waitingTodos = $scope.todos;
-    todos.stageTodos.push(thisTodo);
-    $scope.todoService.set('weektodos', weektodos);
-    $scope.$broadcast('updateStageTodos');
+        thisTodo = $scope.waitingTodos.splice(i, 1)[0];
+    $scope.todos.waitingTodos = $scope.waitingTodos;
+    $scope.todos.stageTodos.push(thisTodo);
+    $scope.todoService.set('weektodos', $scope.weektodos);
+    $scope.$broadcast('updateStageTodos', $scope.todos.stageTodos);
   };
 }])
 
 .controller('ListCtrl', ['$scope', '$ionicModal', function($scope, $ionicModal) {
-  var weektodos = $scope.todoService.get('weektodos'), todos = weektodos.todos, allTodos,
-      thisWeekTodo, startDate, today, days;
-  if(todos.allTodos.length > 0 && !todos.enable_add) {
-    allTodos = todos.allTodos;
+  var allTodos, thisWeekTodo, startDate, today, days;
+  if($scope.todos.allTodos.length > 0 && !$scope.todos.enableAdd) {
+    allTodos = $scope.todos.allTodos;
     thisWeekTodo = allTodos[allTodos.length - 1];
     startDate = thisWeekTodo.date;
     today = new Date().getTime();
     days = parseInt((today - startDate) / (1000 * 3600 * 24));
     $scope.remain = 7 - days;
-    $scope.todos = thisWeekTodo.todos;
+    $scope.listTodos = thisWeekTodo.todos;
   } else {
-    $scope.todos = [];
+    $scope.listTodos = [];
   }
 
   $scope.$on('updateTodoList', function(event, data) {
-    $scope.todos = data;
+    $scope.listTodos = data;
     $scope.remain = 7;
   });
 
   $scope.toggleTodo = function() {
     var i = this.$parent.$index, isDone = true;
-    thisWeekTodo.todos = $scope.todos;
-    $scope.todoService.set('weektodos', weektodos);
+    thisWeekTodo.todos = $scope.listTodos;
+    $scope.todoService.set('weektodos', $scope.weektodos);
 
-    angular.forEach($scope.todos, function(todo, key) {
+    angular.forEach($scope.listTodos, function(todo, key) {
       if(!todo.done) {
         isDone = false;
         return;
@@ -140,12 +128,12 @@ angular.module('todo.controllers', ['todo.services'])
     $scope.modal = modal;
   });
   $scope.pushArchive = function() {
-    todos.enableAdd = true;
-    $scope.todoService.set('weektodos', weektodos);
-    $scope.todos = [];
+    $scope.todos.enableAdd = true;
+    $scope.todoService.set('weektodos', $scope.weektodos);
+    $scope.listTodos = [];
     $scope.remain = 0;
     $scope.modal.hide();
-    $scope.$emit('watchAddStatus', true);
+    $scope.$emit('watchAddStatus', $scope.todos.enableAdd);
   };
 }])
 
@@ -178,15 +166,10 @@ angular.module('todo.controllers', ['todo.services'])
 }])
 
 .controller('StageCtrl', ['$scope', '$ionicGesture', '$ionicPopup', function($scope, $ionicGesture, $ionicPopup){
-  var weektodos = $scope.todoService.get('weektodos'),
-      todos = weektodos.todos;
-  $scope.$on('updateStageTodos', function() {
-    weektodos = $scope.todoService.get('weektodos');
-    todos = weektodos.todos;
-    $scope.todos = todos.stageTodos;
+  $scope.$on('updateStageTodos', function(event, data) {
+    $scope.stageTodos = data;
   });
-
-  $scope.todos = todos.stageTodos;
+  $scope.stageTodos = $scope.todos.stageTodos;
 
 	$ionicGesture.on('swipedown', function() {
     angular.element(document.getElementById('add-task')).removeClass('add-task');
@@ -194,20 +177,20 @@ angular.module('todo.controllers', ['todo.services'])
   }, angular.element(document));
 
   $scope.addTodo = function() {
-    $scope.todos.push({
+    $scope.stageTodos.push({
       done: false,
       text: this.todoText
     });
     this.todoText = "";
-    todos.stageTodos = $scope.todos;
-    $scope.todoService.set('weektodos', weektodos);
+    $scope.todos.stageTodos = $scope.stageTodos;
+    $scope.todoService.set('weektodos', $scope.weektodos);
   };
 
   $scope.deleteTodo = function() {
     var i = this.$parent.$index;
-    $scope.todos.splice(i, 1);
-    todos.stageTodos = $scope.todos;
-    $scope.todoService.set('weektodos', weektodos);
+    $scope.stageTodos.splice(i, 1);
+    $scope.todos.stageTodos = $scope.stageTodos;
+    $scope.todoService.set('weektodos', $scope.weektodos);
   };
 
   $scope.moveTaskIn = function() {
@@ -218,11 +201,11 @@ angular.module('todo.controllers', ['todo.services'])
         template: '请先完成当前的一周任务'
       });
     } else {
-      thisTodo = $scope.todos.splice(i, 1)[0];
-      todos.waitingTodos.push(thisTodo);
-      todos.stageTodos = $scope.todos;
-      $scope.todoService.set('weektodos', weektodos);
-      $scope.$emit('updateWaitingTodo');
+      thisTodo = $scope.stageTodos.splice(i, 1)[0];
+      $scope.todos.waitingTodos.push(thisTodo);
+      $scope.todos.stageTodos = $scope.stageTodos;
+      $scope.todoService.set('weektodos', $scope.weektodos);
+      $scope.$emit('updateWaitingTodo', $scope.todos.waitingTodos);
     }
   };
 }])

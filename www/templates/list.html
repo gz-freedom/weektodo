@@ -1,11 +1,11 @@
 <ion-view view-title="当前一周任务">
-  <ion-content ng-show="todos.length == 0">
-    <h1 class="title">当前没有任务</h1>
-    <a class="button button-calm" ng-click="openAddTodo(true)">添加新的一周任务</a>
+  <ion-content ng-show="listTodos.length == 0">
+    <h1 class="tip-noTask">当前没有计划</h1>
+    <a class="button button-calm button-addTodo" ng-click="openAddTodo()">添加新的一周计划</a>
   </ion-content>
-  <ion-content ng-hide="todos.length == 0">
+  <ion-content ng-hide="listTodos.length == 0">
     <ion-list>
-        <ion-item ng-repeat="todo in todos" class="item item-checkbox">
+        <ion-item ng-repeat="todo in listTodos" class="item item-checkbox">
           <label class="checkbox checkbox-calm">
             <input type="checkbox" ng-model="todo.done" ng-change="toggleTodo()" class="todo-checkbox">
           </label>
@@ -13,7 +13,7 @@
         </ion-item>
     </ion-list>
   </ion-content>
-  <ion-footer-bar class="bar-calm" ng-hide="todos.length == 0">
-    <h1 class="title">任务倒计时: {{remain}}天</h1>
+  <ion-footer-bar class="bar-calm" ng-hide="listTodos.length == 0">
+    <h1 class="title">完成倒计时: {{remain}}天</h1>
   </ion-footer-bar>
 </ion-view>
