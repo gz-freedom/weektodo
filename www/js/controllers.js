@@ -1,8 +1,25 @@
 angular.module('todo.controllers', ['todo.services'])
 
 .controller('MainCtrl', ['$scope', '$ionicModal', '$ionicPopup', '$location', 'Todos', function($scope, $ionicModal, $ionicPopup, $location, Todos){
+  $scope.version = "0.0.0";
   $scope.todoService = Todos;
   $scope.weektodos = $scope.todoService.get('weektodos');
+
+  if($scope.weektodos) {
+    $scope.weektodos['version'] = $scope.version;
+  } else {
+    $scope.weektodos = {
+      version: $scope.version,
+      todos: {
+        enableAdd: true,
+        allTodos: [],
+        waitingTodos: [],
+        stageTodos: [],
+        stat: {}
+      }
+    };
+    $scope.todoService.set('weektodos', $scope.weektodos);
+  }
   $scope.todos = $scope.weektodos.todos;
 
   $scope.$on('updateWaitingTodo', function(event, data) {
@@ -208,30 +225,4 @@ angular.module('todo.controllers', ['todo.services'])
       $scope.$emit('updateWaitingTodo', $scope.todos.waitingTodos);
     }
   };
-}])
-
-.controller('EntranceCtrl', ['$scope', '$timeout', '$location', 'Todos', function($scope, $timeout, $location, Todos) {
-  $scope.todoService = Todos;
-  $scope.version = '0.0.0';
-  var weektodos = $scope.todoService.get('weektodos');
-  if(weektodos) {
-    weektodos['version'] = $scope.version;
-  } else {
-    weektodos = {
-      version: $scope.version,
-      todos: {
-        enableAdd: true,
-        allTodos: [],
-        waitingTodos: [],
-        stageTodos: [],
-        stat: {}
-      }
-    };
-    $scope.todoService.set('weektodos', weektodos);
-  }
-  $timeout(function() {
-    $location.path('/todo/list');
-  }, 1000);
 }]);
-
-
