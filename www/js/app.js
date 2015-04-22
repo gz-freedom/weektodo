@@ -17,7 +17,7 @@ angular.module('todos', ['ionic', 'todo.controllers'])
   $stateProvider
 
   .state('todo', {
-    url: '/todo',
+    url: '/index.html/#/todo',
     abstract: true,
     templateUrl: 'templates/todos.html',
     controller: 'MainCtrl'
@@ -64,7 +64,7 @@ angular.module('todos', ['ionic', 'todo.controllers'])
   })
 
   .state('entrance', {
-    url: '/entrance',
+    url: '/index.html/#/entrance',
     templateUrl: 'templates/entrance.html',
     controller: 'EntranceCtrl'
   });

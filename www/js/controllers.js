@@ -230,7 +230,8 @@ angular.module('todo.controllers', ['todo.services'])
     $scope.todoService.set('weektodos', weektodos);
   }
   $timeout(function() {
-    $location.path('/todo/list');
+    //window.location.href = '#/todo/list';
+    alert(window.location.href);
   }, 1000);
 }]);
 
