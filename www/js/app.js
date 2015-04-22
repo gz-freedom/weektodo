@@ -17,7 +17,7 @@ angular.module('todos', ['ionic', 'todo.controllers'])
   $stateProvider
 
   .state('todo', {
-    url: '/index.html/#/todo',
+    url: '/todo',
     abstract: true,
     templateUrl: 'templates/todos.html',
     controller: 'MainCtrl'
@@ -61,14 +61,8 @@ angular.module('todos', ['ionic', 'todo.controllers'])
         controller: 'ArchiveSubCtrl'
       }
     }
-  })
-
-  .state('entrance', {
-    url: '/index.html/#/entrance',
-    templateUrl: 'templates/entrance.html',
-    controller: 'EntranceCtrl'
   });
 
-  $urlRouterProvider.otherwise('/entrance');
+  $urlRouterProvider.otherwise('/todo/list');
 
 }]);
