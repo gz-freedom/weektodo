@@ -25,8 +25,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	display: none;
 }
 .tip-move-in,
-.tip-move-out,
-.tip-norecord {
+.tip-move-out {
 	color: #999;
 	padding-top: 10px;
 	font-size: 80%;
@@ -47,23 +46,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	color: $light;
 	text-align: center;
 }
-.entrance {
-	background-color: $calm;
-	width: 100%;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-}
-.entrance .greeting {
-	position: absolute;
-	top: 45%;
-	color: $light;
-	font-size: 18px;
-	text-align: center;
-	width: 100%;
-}
-.tip-noTask {
-	margin: 30px 15px !important;
+
+.tip-noTask,
+.tip-norecord {
+	margin: 0 15px !important;
+	padding: 20px 0 !important;
 	color: #666;
 	font-size: 16px;
 }
@@ -72,4 +59,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	width: 180px;
 	display: block;
 	margin: 0 auto;
+}
+.input-todotext {
+	font-size: 16px !important;
 }

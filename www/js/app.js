@@ -25,6 +25,7 @@ angular.module('todos', ['ionic', 'todo.controllers'])
 
   .state('todo.list', {
     url: '/list',
+    cache: false,
     views: {
       'menu-content': {
         templateUrl: 'templates/list.html',
@@ -35,6 +36,7 @@ angular.module('todos', ['ionic', 'todo.controllers'])
 
   .state('todo.stage', {
     url: '/stage',
+    cache: false,
     views: {
       'menu-content': {
         templateUrl: 'templates/stage.html',
@@ -45,6 +47,7 @@ angular.module('todos', ['ionic', 'todo.controllers'])
 
   .state('todo.archive', {
     url: '/archive',
+    cache: false,
     views: {
       'menu-content': {
         templateUrl: 'templates/archive.html',

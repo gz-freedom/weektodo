@@ -1,6 +1,6 @@
 angular.module('todo.controllers', ['todo.services'])
 
-.controller('MainCtrl', ['$scope', '$ionicModal', '$ionicPopup', 'Todos', function($scope, $ionicModal, $ionicPopup, Todos){
+.controller('MainCtrl', ['$scope', '$ionicModal', '$ionicPopup', '$location', '$window', 'Todos', function($scope, $ionicModal, $ionicPopup, $location, $window, Todos){
   $scope.version = "0.0.0";
   $scope.todoService = Todos;
   $scope.weektodos = $scope.todoService.get('weektodos');
@@ -84,10 +84,11 @@ angular.module('todo.controllers', ['todo.services'])
     });
     $scope.todos.enableAdd = false;
     $scope.addTodos = false;
-    $scope.todos.waitingTodos = [];
     $scope.todoService.set('weektodos', $scope.weektodos);
     $scope.modal.hide();
     $scope.$broadcast('updateTodoList', $scope.waitingTodos);
+    $scope.todos.waitingTodos = [];
+    $scope.waitingTodos = [];
   };
 
   $scope.checkTodos = function() {
@@ -119,6 +120,8 @@ angular.module('todo.controllers', ['todo.services'])
   }
 
   $scope.$on('updateTodoList', function(event, data) {
+    allTodos = $scope.todos.allTodos;
+    thisWeekTodo = allTodos[allTodos.length - 1];
     $scope.listTodos = data;
     $scope.remain = 7;
   });
@@ -165,6 +168,9 @@ angular.module('todo.controllers', ['todo.services'])
       $scope.months.push(month);
     }
   });
+  if(!todos.enableAdd) {
+    $scope.months.pop();
+  }
   $scope.months.reverse();
 }])
 
@@ -224,5 +230,10 @@ angular.module('todo.controllers', ['todo.services'])
       $scope.todoService.set('weektodos', $scope.weektodos);
       $scope.$emit('updateWaitingTodo', $scope.todos.waitingTodos);
     }
+  };
+
+  $scope.showTip = function() {
+    var flag = angular.element(document.getElementById('add-task')).hasClass('add-task');
+    return flag ? true : false;
   };
 }]);

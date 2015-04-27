@@ -7606,7 +7606,7 @@ a.button {
 .add-task {
   display: none; }
 
-.tip-move-in, .tip-move-out, .tip-norecord {
+.tip-move-in, .tip-move-out {
   color: #999;
   padding-top: 10px;
   font-size: 80%;
@@ -7627,23 +7627,9 @@ a.button {
   color: #fff;
   text-align: center; }
 
-.entrance {
-  background-color: #11c1f3;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0; }
-
-.entrance .greeting {
-  position: absolute;
-  top: 45%;
-  color: #fff;
-  font-size: 18px;
-  text-align: center;
-  width: 100%; }
-
-.tip-noTask {
-  margin: 30px 15px !important;
+.tip-noTask, .tip-norecord {
+  margin: 0 15px !important;
+  padding: 20px 0 !important;
   color: #666;
   font-size: 16px; }
 
@@ -7652,3 +7638,6 @@ a.button {
   width: 180px;
   display: block;
   margin: 0 auto; }
+
+.input-todotext {
+  font-size: 16px !important; }
