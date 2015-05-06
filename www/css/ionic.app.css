@@ -7641,3 +7641,6 @@ a.button {
 
 .input-todotext {
   font-size: 16px !important; }
+
+.done-true {
+  text-decoration: line-through; }

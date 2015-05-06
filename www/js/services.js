@@ -8,5 +8,5 @@ angular.module('todo.services', [])
     set: function(name, value) {
       return localStorage.setItem(name, angular.toJson(value));
     }
-  }
+  };
 });
