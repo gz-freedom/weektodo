@@ -1,7 +1,7 @@
 angular.module('todo.controllers', ['todo.services'])
 
 .controller('MainCtrl', ['$scope', '$ionicModal', '$ionicPopup', '$location', '$window', 'Todos', function($scope, $ionicModal, $ionicPopup, $location, $window, Todos){
-  $scope.version = "0.0.0";
+  $scope.version = "0.0.1";
   $scope.todoService = Todos;
   $scope.weektodos = $scope.todoService.get('weektodos');
 
@@ -84,10 +84,10 @@ angular.module('todo.controllers', ['todo.services'])
     });
     $scope.todos.enableAdd = false;
     $scope.addTodos = false;
+    $scope.todos.waitingTodos = [];
     $scope.todoService.set('weektodos', $scope.weektodos);
     $scope.modal.hide();
     $scope.$broadcast('updateTodoList', $scope.waitingTodos);
-    $scope.todos.waitingTodos = [];
     $scope.waitingTodos = [];
   };
 
